@@ -1,1 +1,1 @@
-# 0x00. Python - Hello, World tasks Task
+Python - Hello, World
