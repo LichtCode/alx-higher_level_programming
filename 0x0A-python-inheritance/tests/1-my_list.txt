@@ -1,0 +1,17 @@
+"""
+1-my_list.py
+============
+
+This class extends the built-in `list` class and implements sorted printing functionality.
+
+Usage
+=====
+
+To use `MyList`, create an instance of the class and manipulate it like a regular list.
+
+Example
+-------
+
+```python
+my_list = MyList([3, 1, 2])
+my_list.print_sorted()  # Output: [1, 2, 3]
