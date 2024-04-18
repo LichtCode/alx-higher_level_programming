@@ -12,11 +12,11 @@ def append_after(filename="", search_string="", new_string=""):
         new_string (str): The string to insert after each occurrence of the 
             search_string.
     """
-    lines = []
+    text = ""
     with open(filename) as r:
         for line in r:
-            lines.append(line.rstrip())
+            text += line
             if search_string in line:
-                lines.append(new_string)
+                text += new_string
     with open(filename, "w") as w:
-        w.write("\n".join(lines))
+        w.write(text)
