@@ -2,15 +2,31 @@
 """
 Rectangle module
 """
+
+
 from models.base import Base
 
 
 class Rectangle(Base):
     """
     Rectangle class
+
+    Attributes:
+        width (int): width of rectangle.
+        height (int): height of rectangle.
+        x (int): x.
+        y (int): y.
     """
+
     def __init__(self, width, height, x=0, y=0, id=None):
         """Initialize a new Rectangle.
+
+        Args:
+            width (int): width of rectangle.
+            height (int): height of rectangle.
+            x (int, optional): x. Defaults to 0.
+            y (int, optional): y. Defaults to 0.
+            id (int, optional): Identity number of rectangle. Defaults to None.
         """
         super().__init__(id)
 
@@ -31,8 +47,6 @@ class Rectangle(Base):
         """
         set Width
         """
-        # added a check for when value is a bool, if the check is removed
-        # the unittest for it will fail
         if not isinstance(value, int) or isinstance(value, bool):
             raise TypeError("width must be an integer")
         if value <= 0:
@@ -72,7 +86,7 @@ class Rectangle(Base):
         """
         # added a check for when value is a bool, if the check is removed
         # the unittest for it will fail
-        if not isinstance(value, int) or isinstance(value, bool):
+        if type(value) is not int:
             raise TypeError("x must be an integer")
         if value < 0:
             raise ValueError("x must be >= 0")
@@ -90,7 +104,7 @@ class Rectangle(Base):
         """
         set y
         """
-        if not isinstance(value, int):
+        if type(value) is not int:
             raise TypeError("y must be an integer")
         if value < 0:
             raise ValueError("y must be >= 0")
@@ -108,11 +122,16 @@ class Rectangle(Base):
         """
         Print size of rectangle using #
         """
-        for _ in range(self.y):
+        if self.__y > 0:
+            for i in range(self.__y):
+                print()
+            self.__y = 0
+        for i in range(self.__height):
+            for j in range(self.__width):
+                if self.__y == j:
+                    print(" " * self.__x, end="")
+                print("#", end="")
             print()
-
-        for _ in range(self.height):
-            print(" " * self.x + "#" * self.width)
 
     def __str__(self):
         """
@@ -128,35 +147,13 @@ class Rectangle(Base):
         """
         Assigns arguments to attributes based on their positions.
         """
-        if args:
-            for count, arg in enumerate(args):
-                if count == 0:
-                    self.id = arg
-                elif count == 1:
-                    self.width = arg
-                elif count == 2:
-                    self.height = arg
-                elif count == 3:
-                    self.x = arg
-                elif count == 4:
-                    self.y = arg
-                else:
-                    break
-                
-        elif len(kwargs) > 0:
+        if args is not None and len(args) is not 0:
+            list_atrr = ['id', 'width', 'height', 'x', 'y']
+            for i in range(len(args)):
+                setattr(self, list_atrr[i], args[i])
+        else:
             for key, value in kwargs.items():
-                if key == "id":
-                    self.id = value
-                elif key == "width":
-                    self.width = value
-                elif key == "height":
-                    self.height = value
-                elif key == "x":
-                    self.x = value
-                elif key == "y":
-                    self.y = value
-                # removed the break statement, incase if the passed args are greater
-                # than 5, and one of the attributes is at the end
+                setattr(self, key, value)
 
     def to_dictionary(self):
         """

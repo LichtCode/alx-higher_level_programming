@@ -2,6 +2,8 @@
 """
 Defines a square class.
 """
+
+
 from models.rectangle import Rectangle
 
 
@@ -23,6 +25,13 @@ class Square(Rectangle):
 
     @size.setter
     def size(self, value):
+        """Property setter for width of square.
+        """
+        if not isinstance(value, int):
+            raise TypeError("width must be an integer")
+        if value <= 0:
+            raise ValueError("width must be > 0")
+
         self.width = value
         self.height = value
 
@@ -31,42 +40,37 @@ class Square(Rectangle):
         Update the Square.
         """
         if args and len(args) != 0:
-            for count, arg in enumerate(args):
-                if count == 0:
-                    self.id = arg
-                elif count == 1:
-                    self.size = arg
-                elif count == 2:
-                    self.x = arg
-                elif count == 3:
-                    self.y = arg
-                else: continue
-
-        elif len(kwargs) > 0:
+            list_atr = ['id', 'size', 'x', 'y']
+            for i in range(len(args)):
+                if list_atr[i] == 'size':
+                    setattr(self, 'width', args[i])
+                    setattr(self, 'height', args[i])
+                else:
+                    setattr(self, list_atr[i], args[i])
+        else:
             for key, value in kwargs.items():
-                if key == "id":
-                    self.id = value
-                elif key == "size":
-                    self.size = value
-                elif key == "x":
-                    self.x = value
-                elif key == "y":
-                    self.y = value
-                # removed the break statement, incase if the passed args are greater
-                # than 5, and one of the attributes is at the end
+                if key == 'size':
+                    setattr(self, 'width', value)
+                    setattr(self, 'height', value)
+                else:
+                    setattr(self, key, value)
 
     def to_dictionary(self):
         """Return the dictionary representation of the Square."""
+
+        dict1 = self.__dict__
         square_dict = {
-            "id": self.id,
-            "size": self.width,
-            "x": self.x,
-            "y": self.y
+            "id": dict1['id'],
+            "size": dict1['_Rectangle__width'],
+            "x": dict1['_Rectangle__x'],
+            "y": dict1['_Rectangle__y'],
         }
 
         return square_dict
 
     def __str__(self):
         """Return the print() and str() representation of a Square."""
-        return "[Square] ({}) {}/{} - {}".format(self.id, self.x, self.y,
-                                                 self.width)
+        return "[Square] ({}) {}/{} - {}".format(self.id,
+                                                self.x,
+                                                self.y,
+                                                self.width)

@@ -55,13 +55,46 @@ class Base:
 
     def from_json_string(json_string):
         """
-
+        Returns the list of the JSON string representation json_string
         """
         if json_string is None or json_string == "[]":
             return []
         return json.loads(json_string)
 
 
+    @classmethod
+    def create(cls, **dictionary):
+        """Return an instance with all attributes already set.
+        """
+        if dictionary and dictionary != {}:
+            if cls.__name__ == "Rectangle":
+                dummy = cls(1, 1)
+            else:
+                dummy = cls(1)
+            dummy.update(**dictionary)
+
+            return dummy
+
+    @classmethod
+    def load_from_file(cls):
+        """
+        g
+        """
+        file_name = "{}.json".format(cls.__name__)
+
+        try:
+            with open(file_name, "r") as jsonfile:
+                list_dicts = Base.from_json_string(jsonfile.read())
+
+                list_instances = []
+
+                for d in list_dicts:
+                    list_instances.append(cls.create(**d))
+                return list_instances
+        except FileNotFoundError:
+            return []
+
+ 
 
 
 if __name__ == "__main__":
