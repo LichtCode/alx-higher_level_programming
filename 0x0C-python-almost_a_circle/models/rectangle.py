@@ -146,7 +146,7 @@ class Rectangle(Base):
         """
         Assigns arguments to attributes based on their positions.
         """
-        if args is not None and len(args) is not 0:
+        if args is not None and len(args) != 0:
             list_atrr = ['id', 'width', 'height', 'x', 'y']
             for i in range(len(args)):
                 setattr(self, list_atrr[i], args[i])
@@ -163,7 +163,7 @@ class Rectangle(Base):
                 "width": self.width,
                 "height": self.height,
                 "x": self.x,
-                "y": self.y
+                "y": self.y,
         }
 
         return rec_dict
