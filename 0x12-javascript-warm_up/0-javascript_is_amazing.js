@@ -1,7 +1,6 @@
 #!/usr/bin/node
-
 /*
- * prints JavaScript is amazing to the screen
+ * Outputs JavaScript is amazing onto the screen
  */
 
 const myVar = 'JavaScript is amazing';
